@@ -1,9 +1,11 @@
 .App {
   display: flex;
+  position: relative;
+  border: 2px solid blue;
 }
 
 .column {
-  border: 2px solid black;
+  border: 1px #ccc solid;
   flex-grow: 1;
   margin: 25px;
   text-align: center;
@@ -11,5 +13,12 @@
 
 .card {
   padding: 25px;
+  border: 2px solid red;
   display: flex;
+  flex-grow: 1;
+}
+
+.card span {
+  flex-grow: 1;
+  text-align: center;
 }

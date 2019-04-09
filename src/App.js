@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Column from "./Column";
-import Card from "./Card";
+
+const DIRECTION_LEFT = -1;
+const DIRECTION_RIGHT = 1;
 
 class App extends Component {
   constructor(props) {
@@ -39,15 +40,21 @@ class App extends Component {
     });
   };
 
+  handleArrows = columnIndex => {
+    console.log("hit");
+  };
+
+  handleMove = (columnIndex, cardIndex, direction) => {
+    this.setState(prevState => {
+      const { columns } = prevState;
+      const [card] = this.state.columns[columnIndex].cards.splice(cardIndex, 1);
+      this.state.columns[columnIndex + direction].cards.push(card);
+      return { columns };
+    });
+  };
+
   render() {
     console.log(this.state);
-
-    // console.log(this.state.columns[0].cards.name);
-    // let cards = this.state.columns.cards.map(column => {
-    //   column.cards.map(card => {
-    //     return <p>{card.name}</p>;
-    //   });
-    // });
     return (
       <div className="App">
         {this.state.columns.map((column, columnIndex) => (
@@ -55,7 +62,14 @@ class App extends Component {
             column={column}
             columnIndex={columnIndex}
             key={columnIndex}
+            onMoveLeft={cardIndex =>
+              this.handleMove(columnIndex, cardIndex, DIRECTION_LEFT)
+            }
+            onMoveRight={cardIndex =>
+              this.handleMove(columnIndex, cardIndex, DIRECTION_RIGHT)
+            }
             onAddCard={() => this.handleAdd(columnIndex)}
+            onArrow={() => this.handleArrows(columnIndex)}
           />
         ))}
       </div>
